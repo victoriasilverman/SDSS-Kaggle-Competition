@@ -1,5 +1,15 @@
-## Victoria Silverman, 101039968
-## STAT4601 Final Project
+## Victoria Silverman
+##University of Ottawa 
+##This is the property of Victoria Silverman and the University of Ottawa and Carleton University
+
+##there are 4 parts of this project
+# 1. Visualization
+# 2. Data Reduction
+# 3. Clustering
+# 4. Classification
+
+# there are several visualizations throughout the report, for clustering we do K-means and Heirarichial, for classification we do a simple neural net using nnet
+# and we do k-nearest neighbors
 
 ##set up directory 
 dir='/Users/Victoria/Documents/Victoria/4th year/STAT4601'
@@ -23,6 +33,7 @@ library(gridExtra)
 library(caret)
 library(ape)
 library(colorRamps)
+
 #read in data
 playstore<-read_csv(google, col_names=TRUE)
 
@@ -63,7 +74,7 @@ playstore_reduc<-playstore[,-c(1,10,14)]
 #run PCA
 playstore_prc<-prcomp(playstore_reduc,scale=TRUE)
 #summary of PCA
-summary(playstore_prc) #we notice there are 18 principal components 
+summary(playstore_prc) #we notice there are 15 principal components 
 
 #look at scree plot of pcs
 variance <- (playstore_prc$sdev)^2
@@ -71,7 +82,7 @@ loadings <- playstore_prc$rotation
 rownames(loadings) <- colnames(playstore_reduc)
 colName<-colnames(playstore_reduc)
 scores <- playstore_prc$x 
-varPercent <- variance/sum(variance) * 100 # a vector with the percentage of variation captured in each of the 10
+varPercent <- variance/sum(variance) * 100 # a vector with the percentage of variation captured in each of the 15
 PC<-varPercent[1:15]
 
 #scree plot of 18 pc's
@@ -94,7 +105,7 @@ playstore_reduc<-playstore[,-c(1,10,13,14,16,17,18)]
 #run PCA
 playstore_prc<-prcomp(playstore_reduc,scale=TRUE)
 #summary of PCA
-summary(playstore_prc) #we notice there are 18 principal components 
+summary(playstore_prc) #we notice there are 11 principal components 
 
 #look at scree plot of pcs
 variance <- (playstore_prc$sdev)^2
@@ -105,7 +116,7 @@ scores <- playstore_prc$x
 varPercent <- variance/sum(variance) * 100 # a vector with the percentage of variation captured in each of the 10
 PC<-varPercent[1:11]
 
-#scree plot of 14 pc's
+#scree plot of 11 pc's
 barplot(PC, xlab='PC', ylab='Percent Variance',
         names.arg=1:11, las=1, col=brewer.pal(n=9, name="BuPu"), main = "Scree Plot for 11 PC's") 
 
@@ -128,7 +139,7 @@ grid.arrange(p4,p5,p6,nrow=2)
 source("//Users//Victoria//Documents/Victoria//4th year//STAT4601//MakeStereo.r")
 
 make.Stereo(playstore_prc$x[,c(1,2,3)], classes, Main="SDSS", asp="F",
-            Xlab="PC2", Ylab="PC3", Zlab="PC1")
+            Xlab="PC1", Ylab="PC2", Zlab="PC3")
 
 
 set.seed(456) #for random parts
